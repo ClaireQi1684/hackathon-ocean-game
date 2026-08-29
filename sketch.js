@@ -1,6 +1,6 @@
-let ballX = 200;
-let ballY = 0;
-let ballSpeed = 3;
+let yjh;
+let hsy;
+
 let score = 0;
 let seconds = 10;
 
@@ -15,6 +15,7 @@ let isGameOver = false;
 let isWin;
 let catSpeed;
 let button;
+let ballSpeed;
 
 let ballTimer = 0;
 
@@ -39,7 +40,9 @@ function setup() {
   ball.diameter = 5;
 
   cats = new Group();
+
   ink = new Group();
+  ink.diameter = 5;
 
   button = createButton("Regress");
   button.position(750, 450);
@@ -66,18 +69,18 @@ function draw() {
   fill(0);
   text("Score: " + score, 10, 20);
 
-  if (score > 30) {
+  if (score > 25) {
     level = 2;
   } else if (score > 10) {
     level = 1;
   }
 
   if (level === 0) {
-    ball.speed = 5;
+    ballSpeed = 5;
   } else if (level === 1) {
-    ball.speed = 3;
+    ballSpeed = 3;
   } else if (level === 2) {
-    ball.speed = 1;
+    ballSpeed = 1;
   }
 
   if (level === 0) {
@@ -85,7 +88,7 @@ function draw() {
   } else if (level === 1) {
     catSpeed = 0.02;
   } else if (level === 2) {
-    catSpeed = 0.3;
+    catSpeed = 0.03;
   }
 
   // if (isUsingSKill) {
@@ -104,6 +107,7 @@ function draw() {
     b.color = color(255,255,255);
     b.overlaps(sunfish);
     b.direction = b.angleTo(mouse);
+    b.speed = ballSpeed;
   }
 
   if (kb.pressing("left")){
@@ -120,19 +124,20 @@ function draw() {
   }
 
   spawnCats();
-  for(let i = 0; i < cats.length; i++) {
+  for (let i = cats.length - 1; i >= 0; i--) {
     cats[i].moveTowards(sunfish, catSpeed);
+    if (level === 2 && frameCount % 60 === 0) {
+      let inkShot = new ink.Sprite(cats[i].x, cats[i].y);
+      inkShot.color = color(0);
+      inkShot.direction = inkShot.random(0, 360);
+      inkShot.speed = 1;
+    }
     for(let j = 0; j < ball.length; j++) {
       if (cats[i].collides(ball[j])) {
         cats[i].remove();
         ball[j].remove();
         score++;
       }
-    }
-    if (level === 2) {
-      let i = new ink.Sprite(cat[i].x, cat[i].y);
-      i.color = color(0);
-      i.direction = i.random(0, 360);
     }
     if (cats[i].overlaps(sunfish)) {
       isGameOver = true;
@@ -181,7 +186,6 @@ function restart() {
   isGameOver = false;
   score = 0;
   level = 0;
-  catSpeed = 0;
   ballTimer = 0;
 
   sunfish.x = width / 2;
