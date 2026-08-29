@@ -2,6 +2,8 @@ let yjh;
 let blob;
 let bg;
 let dead; //images
+let images = [];
+
 
 let score = 0;
 let seconds = 10;
@@ -21,12 +23,20 @@ let isFacingRight = true;
 let spawnRate;
 let hitWidth;
 let hitLength;
+let specialLevel = false;
 
 function preload(){
   yjh = loadImage("Sunfish/Sunfish-Unimpressed.png");
   blob = loadImage("Background & Sea Bunny/Pollution.png");
   bg = loadImage("Background & Sea Bunny/Final_Level.png");
   dead = loadImage("Sunfish/Sunfish-Death.png");
+  images[0] = loadImage("Cat/Cat-Angry.png");
+  images[2] = loadImage("Cat/Cat-Scared.png");
+  images[3] = loadImage("Cat/Cat-Sigh.png");
+  images[4] = loadImage("Squid/Corruption Four/Squid-MeltingOne.png");
+  images[5] = loadImage("Squid/Corruption Four/Squid-MeltingTwo.png");
+  images[6] = loadImage("Squid/Corruption Four/Squid-MeltingThree.png");
+  images[1] = loadImage("Squid/Corruption Four/Squid-Nauseous.png");
 }
 
 function setup() {
@@ -57,6 +67,10 @@ function draw() {
     gameOver();
     sunfish.vel.x = 0;
     sunfish.vel.y = 0;
+    return;
+  }
+  if (isWin) {
+    win();
     return;
   }
   image(bg, 0, 0, 1500, 800);
@@ -178,7 +192,11 @@ function spawnCats() {
     else if (side == 3) {
       c = new cats.Sprite(random(0, width), height + 50);
     }
-    c.img = blob;
+    if (specialLevel) {
+      c.img = images[floor(random(images.length))];
+    } else{
+      c.img = blob;
+    }
     c.scale = blobSize;
     c.w = hitWidth;
     c.h = hitLength;
@@ -209,3 +227,5 @@ function gameOver() {
     ball.removeAll();
     return;
 }
+
+function win() {}
