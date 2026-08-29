@@ -1,16 +1,16 @@
 let yjh;
 let blob;
 let bg;
-let dead;
+let dead; //images
 
 let score = 0;
 let seconds = 10;
 
-let sunfish;
+let sunfish; //sprites
 let ball;
 let cats;
 
-let level = 0;
+let level = 0; //misc
 let isGameOver = false;
 let isWin = false;
 let catSpeed;
@@ -22,10 +22,7 @@ let spawnRate;
 let hitWidth;
 let hitLength;
 
-let ballTimer = 0;
-
 function preload(){
-  //images are placeholders
   yjh = loadImage("Sunfish/Sunfish-Unimpressed.png");
   blob = loadImage("Background & Sea Bunny/Pollution.png");
   bg = loadImage("Background & Sea Bunny/Final_Level.png");
@@ -35,7 +32,7 @@ function preload(){
 function setup() {
   createCanvas(1500, 800); // Sets the game window size
 
-  sunfish = new Sprite();
+  sunfish = new Sprite(); //make the sunfish
   sunfish.img = yjh;
   sunfish.scale = 0.3;
   sunfish.color = color(255,255,255);
@@ -48,7 +45,7 @@ function setup() {
 
   cats = new Group();
 
-  button = createButton("Regress");
+  button = createButton("Regress"); //regress button
   button.position(750, 400);
   button.style("color", 0)
   button.mousePressed(restart);
@@ -64,8 +61,8 @@ function draw() {
   }
   image(bg, 0, 0, 1500, 800);
 
-  textSize(16);
-  fill(0);
+  textSize(20);
+  fill(255);
   text("Score: " + score, 10, 20);
 
   if (score > 25) {
@@ -74,7 +71,7 @@ function draw() {
     level = 1;
   }
 
-  if (level === 0) {
+  if (level === 0) { //levels settings
     catSpeed = 0.01;
     ballSpeed = 5;
     blobSize = 0.15
@@ -192,7 +189,6 @@ function restart() {
   isGameOver = false;
   score = 0;
   level = 0;
-  ballTimer = 0;
 
   sunfish.x = width / 2;
   sunfish.y = height / 2;
@@ -202,13 +198,14 @@ function restart() {
   button.hide();
   sunfish.img = yjh;
 
-  cats.removeAll();
-  ball.removeAll();
 }
 
 function gameOver() {
     sunfish.img = dead;
     button.position(sunfish.x - 30, sunfish.y - 10);
     button.show();
+
+    cats.removeAll();
+    ball.removeAll();
     return;
 }
