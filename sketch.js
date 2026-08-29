@@ -1,5 +1,7 @@
 let yjh;
-let hsy;
+let blob;
+let bg;
+let dead;
 
 let score = 0;
 let seconds = 10;
@@ -7,22 +9,27 @@ let seconds = 10;
 let sunfish;
 let ball;
 let cats;
-let ink;
 
 let level = 0;
-let isUsingSkill;
 let isGameOver = false;
-let isWin;
+let isWin = false;
 let catSpeed;
 let button;
 let ballSpeed;
+let blobSize;
+let isFacingRight = true;
+let spawnRate;
+let hitWidth;
+let hitLength;
 
 let ballTimer = 0;
 
 function preload(){
   //images are placeholders
-  yjh = loadImage("images/sunfish.png");
-  hsy = loadImage("images/cat.png");
+  yjh = loadImage("Sunfish/Sunfish-Unimpressed.png");
+  blob = loadImage("Background & Sea Bunny/Pollution.png");
+  bg = loadImage("Background & Sea Bunny/Final_Level.png");
+  dead = loadImage("Sunfish/Sunfish-Death.png");
 }
 
 function setup() {
@@ -30,10 +37,10 @@ function setup() {
 
   sunfish = new Sprite();
   sunfish.img = yjh;
-  sunfish.scale = 0.1;
+  sunfish.scale = 0.3;
   sunfish.color = color(255,255,255);
   sunfish.collider = 'kinematic';
-  sunfish.w = 50
+  sunfish.w = 91;
   sunfish.h = 71;
 
   ball = new Group();
@@ -41,11 +48,8 @@ function setup() {
 
   cats = new Group();
 
-  ink = new Group();
-  ink.diameter = 5;
-
   button = createButton("Regress");
-  button.position(750, 450);
+  button.position(750, 400);
   button.style("color", 0)
   button.mousePressed(restart);
   button.hide();
@@ -53,17 +57,12 @@ function setup() {
 
 function draw() {
   if (isGameOver) {
-    background(0);
-
-    fill(255, 0, 0);
-    textSize(50);
-    text("You Died", 700, 400);
-
-    button.show();
-    sunfish.hide();
+    gameOver();
+    sunfish.vel.x = 0;
+    sunfish.vel.y = 0;
     return;
   }
-  background(0, 119, 190);
+  image(bg, 0, 0, 1500, 800);
 
   textSize(16);
   fill(0);
@@ -76,31 +75,27 @@ function draw() {
   }
 
   if (level === 0) {
-    ballSpeed = 5;
-  } else if (level === 1) {
-    ballSpeed = 3;
-  } else if (level === 2) {
-    ballSpeed = 1;
-  }
-
-  if (level === 0) {
     catSpeed = 0.01;
+    ballSpeed = 5;
+    blobSize = 0.15
+    spawnRate = 60;
+    hitWidth = 40;
+    hitLength = 40;
   } else if (level === 1) {
     catSpeed = 0.02;
+    ballSpeed = 3;
+    blobSize = 0.3;
+    spawnRate = 40;
+    hitWidth = 75;
+    hitLength = 75;
   } else if (level === 2) {
     catSpeed = 0.03;
+    ballSpeed = 1;
+    blobSize = 0.45;
+    spawnRate = 20;
+    hitWidth = 90;
+    hitLength = 90;
   }
-
-  // if (isUsingSKill) {
-  //   ballTimer++;
-  //   if (ballTimer >= 15) {
-  //     let newBall = new ball.Sprite(sunfish.x, sunfish.y);
-  //     newBall.color = color(255,255,255);
-  //     newBall.overlaps(sunfish);
-  //     newBall.direction = b.angleTo(mouse);
-  //     ballTimer = 0;
-  //   }
-  // }
 
   if (mouse.presses()) {
     let b = new ball.Sprite(sunfish.x, sunfish.y);
@@ -112,8 +107,10 @@ function draw() {
 
   if (kb.pressing("left")){
     sunfish.vel.x = -3;
+    isFacingRight = false;
   } else if (kb.pressing("right")) {
     sunfish.vel.x = 3;
+    isFacingRight = true;
   } else if (kb.pressing("up")) {
     sunfish.vel.y = -3;
   } else if (kb.pressing("down")) {
@@ -123,21 +120,27 @@ function draw() {
     sunfish.vel.y = 0;
   }
 
+  if (isFacingRight) {
+    sunfish.mirror.x = false;
+  } else {
+    sunfish.mirror.x = true;
+  }
+
   spawnCats();
   for (let i = cats.length - 1; i >= 0; i--) {
     cats[i].moveTowards(sunfish, catSpeed);
-    if (level === 2 && frameCount % 60 === 0) {
-      let inkShot = new ink.Sprite(cats[i].x, cats[i].y);
-      inkShot.color = color(0);
-      inkShot.direction = inkShot.random(0, 360);
-      inkShot.speed = 1;
-    }
+    let wasHit = false;
     for(let j = 0; j < ball.length; j++) {
       if (cats[i].collides(ball[j])) {
         cats[i].remove();
         ball[j].remove();
         score++;
+        wasHit = true;
+        break;
       }
+    }
+    if (wasHit) {
+      continue;
     }
     if (cats[i].overlaps(sunfish)) {
       isGameOver = true;
@@ -157,10 +160,13 @@ function draw() {
     }
   }
 
+  if (score > 50 ) {
+    isWin = true;
+  }
 }
 
 function spawnCats() {
-  if (seconds <= 60 && frameCount % 60 == 0) {
+  if (frameCount % spawnRate == 0) {
     let side = floor(random(4));
     let c;
     if (side == 0) {
@@ -175,10 +181,10 @@ function spawnCats() {
     else if (side == 3) {
       c = new cats.Sprite(random(0, width), height + 50);
     }
-    c.img = hsy;
-    c.scale = 0.075;
-    c.w = 47;
-    c.h = 41; //hitbox, change according to image size
+    c.img = blob;
+    c.scale = blobSize;
+    c.w = hitWidth;
+    c.h = hitLength;
   }
 }
 
@@ -194,8 +200,15 @@ function restart() {
   sunfish.vel.y = 0;
 
   button.hide();
-  sunfish.show();
+  sunfish.img = yjh;
 
   cats.removeAll();
   ball.removeAll();
+}
+
+function gameOver() {
+    sunfish.img = dead;
+    button.position(sunfish.x - 30, sunfish.y - 10);
+    button.show();
+    return;
 }
