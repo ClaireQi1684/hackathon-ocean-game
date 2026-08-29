@@ -1,56 +1,93 @@
-let ballX = 200;
-let ballY = 0;
-let ballSpeed = 3;
-let score = 0;
+// Press a button to choose your path
+// See the README file for more information
 
-let catcher, fallingObject;
+/* VARIABLES */
+let enterButton;
+let a1Button;
+let a2Button;
+let b1Button;
+let b2Button;
+let screen = 0;
 
-// function preload(){
+function preload() {
+
+  //Sunfish
+  sunfishUnimpressed = loadImage("Sunfish/Sunfish-Unimpressed.png");
+  sunfishDeath = loadImage("Sunfish/Sunfish-Death.png");
+  sunfishConcerned = loadImage("Sunfish/Sunfish-Concerned.png");
+  sunfishAngry = loadImage("Sunfish/Sunfish-Angry.png");
+
+  //Squid
+    //Normal squid
+    squidNeutral = loadImage("Squid/Normal Squid/Squid-Neutral.png");
+    squidMad = loadImage("Squid/Normal Squid/Squid-Mad.png");
+    squidHappy = loadImage("Squid/Normal Squid/Squid-Happy.png");
+    squidExclamatory = loadImage("Squid/Normal Squid/Squid-Exclamatory.png");
+    squidConcern = loadImage("Squid/Normal Squid/Squid-Concern.png");
+
+    //Corruption one
+    squidExclamatoryCorruptionOne = loadImage("Squid/Corruption One/Squid-Exclamatory-CorruptionOne.png");
+    squidHappyCorruptionOne = loadImage("Squid/Corruption One/Squid-Happy-CorruptionOne.png");
+    squidNeutralCorruptionOne = loadImage("Squid/Corruption One/Squid-Neutral-CorruptionOne.png");
+
+    //Corruption two
+    squidHappyCorruptionTwo = loadImage("Squid/Corruption Two/Squid-Happy-CorruptionTwo.png");
+    squidNeutralCorruptionTwo = loadImage("Squid/Corruption Two/Squid-Neutral-CorruptionTwo.png");
+
+    //Corruption three
+    squidHappyCorruptionThree = loadImage("Squid/Corruption Three/Squid-Happy-CorruptionThree.png");
+    squidNeutralCorruptionThree = loadImage("Squid/Corruption Three/Squid-Neutral-CorruptionThree.png");
+
+    //Corruption four
+    squidMeltingOne = loadImage("Squid/Corruption Four/Squid-MeltingOne.png");
+    squidMeltingTwo = loadImage("Squid/Corruption Four/Squid-MeltingTwo.png");
+    squidMeltingThree = loadImage("Squid/Corruption Four/Squid-MeltingThree.png");
+    squidNauseous = loadImage("Squid/Corruption Four/Squid-Nauseous.png");
+
+  //Cat
+  catAngry = loadImage("Cat/Cat-Angry.png");
+  catScared = loadImage("Cat/Cat-Scared.png");
+  catSigh = loadImage("Cat/Cat-Sigh.png");
   
-// }
+  //Pollution, sea bunny, and background elements
+  seaBunny = loadImage("Background & Sea Bunny/Sea-Bunny.png");
+  pollution = loadImage("Background & Sea Bunny/Pollution.png");
+  ocean = loadImage("Background & Sea Bunny/Ocean.png");
+  finalLevel = loadImage("Background & Sea Bunny/Final_Level.png");
+}
 
+/* SETUP RUNS ONCE */
 function setup() {
-  createCanvas(400, 400); // Sets the game window size
+  createCanvas(600, 400);
+  textAlign(CENTER);
+  textSize(20);
+  noStroke();
 
-  //Create catcher 
-  catcher = new Sprite(200,380,100,20);
-  catcher.color = color(95,158,160);
-  catcher.collider = 'kinematic';
-  
-  //Create falling object
-  fallingObject = new Sprite(100,0,10);
-  fallingObject.color = color(0,128,128);
-  fallingObject.vel.y = 3;
+  // Set up the home screen
+  background("pink");
+  text(
+    "Welcome to screen 0. This is the home screen.",
+    width / 2,
+    height / 2 - 100
+  );
+
+  // Create buttons for all screens
+
 }
 
+/* DRAW LOOP REPEATS */
 function draw() {
-  background(220); // Clears the screen every frame
+  // Display enter button
 
 
-  // Draw the paddle controlled by the mouse at the bottom
+  // Add A1 button
 
-  if (kb.pressing("left")){
-    catcher.vel.x = -3;
-  } else if (kb.pressing("right")) {
-    catcher.vel.x = 3;
-  } else {
-    catcher.vel.x = 0;
-  }
 
-  // // Check for collision (catching the ball)
-  // if (ballY >= height - 45 && ballX >= mouseX - 40 && ballX <= mouseX + 40) {
-  //   score += 1;
-  //   ballSpeed += 0.5; // Make the game harder each catch
-  //   resetBall();
-  // }
+  // Add A2 button
 
-  // // Display the score
-  // fill(0);
-  // textSize(18);
-  // text("Score: " + score, 20, 30);
+
+  // Check enter button
+
 }
 
-// function resetBall() {
-//   ballY = 0;
-//   ballX = random(30, width - 30);
-// }
+/* FUNCTIONS TO DISPLAY SCREENS */
