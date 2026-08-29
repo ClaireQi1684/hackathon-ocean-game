@@ -5,9 +5,9 @@ let score = 0;
 
 let catcher, fallingObject;
 
-function preload(){
+// function preload(){
   
-}
+// }
 
 function setup() {
   createCanvas(400, 400); // Sets the game window size
