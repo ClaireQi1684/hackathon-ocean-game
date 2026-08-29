@@ -49,10 +49,11 @@ function setup() {
   sunfish.collider = 'dynamic';
   sunfish.diameter = 150;
 
-  // button = createButton("Regress");
-  // button.position(750, 450);
-  // button.style("color", "black");
-  // button.hide();
+  button = createButton("Regress");
+  button.position(750, 450);
+  button.style("color", "black");
+  button.visible = false;
+  button.hide();
 }
 
 function squidExploration() {
@@ -64,7 +65,8 @@ function squidExploration() {
     squid.visible = false;
     pollutions1.visible = false;
     background(0);
-    botton.show();
+    button.visible = true;
+    button.show();
   }
 
   let easing = 0.07;
