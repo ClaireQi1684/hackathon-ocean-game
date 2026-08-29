@@ -1,25 +1,30 @@
-let x, y;
 let speed = 3;
-let dia = 50;
-let jumpspeed = 7;
+let jumpspeed = 12;
+let sunfish, sunhyuk;
+
+function preload() {
+  sunhyuk = loadImage("sunhyuk.png");
+}
 
 function setup() {
-  createCanvas(1000, 300);
-  x = 100;
-  y = 200;
+  createCanvas(1500, 600);
+
+  world.gravity.y = 0.5;
+
+  sunfish = new Sprite(100, 200);
+  sunfish.img = sunhyuk;
+  sunfish.scale = 0.3;
 }
 
 function draw() {
-  clear();
   background(50);
 
-  x += speed;
+  sunfish.x += speed;
 
   if(keyIsDown(32)) {
-    y -= jumpspeed;
+    sunfish.y -= jumpspeed;
   }
 
   fill(255);
   noStroke();
-  circle(x, y, dia);
 }
