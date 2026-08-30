@@ -37,7 +37,23 @@ function preload(){
   images[5] = loadImage("Squid/Corruption Four/Squid-MeltingTwo.png");
   images[6] = loadImage("Squid/Corruption Four/Squid-MeltingThree.png");
   images[1] = loadImage("Squid/Corruption Four/Squid-Nauseous.png");
+  images[7] = loadImage("Squid/Corruption One/Squid-Exclamatory-CorruptionOne.png");
+  images[8] = loadImage("Squid/Corruption One/Squid-Happy-CorruptionOne.png");
+  images[9] = loadImage("Squid/Corruption One/Squid-Neutral-CorruptionOne.png");
+  images[10] = loadImage("Squid/Corruption Three/Squid-Neutral-CorruptionThree.png");
+  images[11] = loadImage("Squid/Corruption Three/Squid-Happy-CorruptionThree.png");
+  images[12] = loadImage("Squid/Corruption Two/Squid-Neutral-CorruptionTwo.png");
+  images[13] = loadImage("Squid/Corruption Two/Squid-Happy-CorruptionTwo.png");
+  images[14] = loadImage("Squid/Normal Squid/Squid-Neutral.png");
+  images[15] = loadImage("Squid/Normal Squid/Squid-Concern.png");
+  images[16] = loadImage("Squid/Normal Squid/Squid-Exclamatory.png");
+  images[17] = loadImage("Squid/Normal Squid/Squid-Happy.png");
+  images[18] = loadImage("Squid/Normal Squid/Squid-Mad.png");
+  images[19] = loadImage("Squid/Normal Squid/Placeholder.png");
+  images[20] = loadImage("images/cat.png");
+  images[21] = loadImage("images/sunfish.png");
 }
+
 
 function setup() {
   createCanvas(1500, 800); // Sets the game window size
@@ -89,21 +105,21 @@ function draw() {
     catSpeed = 0.01;
     ballSpeed = 5;
     blobSize = 0.15
-    spawnRate = 60;
+    spawnRate = 70;
     hitWidth = 40;
     hitLength = 40;
   } else if (level === 1) {
     catSpeed = 0.02;
     ballSpeed = 3;
     blobSize = 0.3;
-    spawnRate = 50;
+    spawnRate = 60;
     hitWidth = 75;
     hitLength = 75;
   } else if (level === 2) {
     catSpeed = 0.03;
     ballSpeed = 1;
     blobSize = 0.45;
-    spawnRate = 40;
+    spawnRate = 50;
     hitWidth = 90;
     hitLength = 90;
   }
@@ -171,7 +187,7 @@ function draw() {
     }
   }
 
-  if (score > 50 ) {
+  if (score > 30 ) {
     isWin = true;
   }
 }
@@ -205,6 +221,7 @@ function spawnCats() {
 
 function restart() {
   isGameOver = false;
+  isWin = false;
   score = 0;
   level = 0;
 
@@ -228,4 +245,7 @@ function gameOver() {
     return;
 }
 
-function win() {}
+function win() {
+  specialLevel = true;
+  restart();
+}
