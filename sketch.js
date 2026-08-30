@@ -91,18 +91,18 @@ function setup() {
     pollution2.scale = 0.25;
     pollutions2.add(pollution2);
   }
-  pollutions2.visible = true;
-  // pollutions2.visible = false;
+  // pollutions2.visible = true;
+  pollutions2.visible = false;
 
   pollutions3 = new Group();
   for (let i = 0; i < 30; i++) {
-    let pollution3 = new Sprite(random(300, 4500), random(150, 700), 25);
+    let pollution3 = new Sprite(random(300, 5000), random(150, 700), 25);
     pollution3.img = pollution;
     pollution3.scale = 0.25;
     pollutions3.add(pollution3);
   }
-  pollutions3.visible = false;
-  // pollutions3.visible = true;
+  // pollutions3.visible = false;
+  pollutions3.visible = true;
 
   sunfishUnimpressedS.collider = 'kinematic';
   sunfishUnimpressedS.diameter = 125;
@@ -122,14 +122,14 @@ function squidExploration() {
   // bgSprite.x = camera.x;
   // camera.y = 400;
 
-  if(sunfishUnimpressedS.overlaps(pollutions2)) {
+  if(sunfishUnimpressedS.overlaps(pollutions3)) {
     sunfishDeadS.x = sunfishUnimpressedS.x + 200;
     sunfishDeadS.y = 450;
     camera.x = sunfishDeadS.x;
     sunfishUnimpressedS.visible = false;
     squidNeutralS.visible = false;
-    pollutions2.visible = false;
-    // pollutions3.visible = false;
+    // pollutions2.visible = false;
+    pollutions3.visible = false;
     sunfishDeadS.visible = true;
     button.visible = true;
     button.show();
@@ -151,8 +151,8 @@ function squidExploration() {
 }
 
 function level1() {
-  speed = 5;
-  // speed = 7;
+  // speed = 5;
+  speed = 7;
   background(200);
 
   squidExploration();
@@ -167,8 +167,8 @@ function restart() {
   sunfishDeadS.visible = false;
   camera.x = 120;
   camera.y = 400;
-  pollutions2.visible = true;
-  // pollutions3.visible = true;
+  // pollutions2.visible = true;
+  pollutions3.visible = true;
   camera.x = sunfishUnimpressedS.x;
   button.visible = false;
   button.hide();
@@ -179,10 +179,11 @@ function draw() {
   level1();
   if (sunfishUnimpressedS.x > 6000) {
     sunfishUnimpressedS.visible = false;
-    pollutions2.visible = false;
-    // pollutions3.visible = false;
+    // pollutions2.visible = false;
+    pollutions3.visible = false;
     squidNeutralS.visible = false;
-    bgSprite.visible = false;
+    bgSprites.visible = false;
+    clear();
     background(50);
     textSize(20);
     fill(255);
