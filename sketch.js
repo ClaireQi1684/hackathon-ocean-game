@@ -92,6 +92,7 @@ function setup() {
     pollutions2.add(pollution2);
   }
   pollutions2.visible = true;
+  // pollutions2.visible = false;
 
   pollutions3 = new Group();
   for (let i = 0; i < 30; i++) {
@@ -101,6 +102,7 @@ function setup() {
     pollutions3.add(pollution3);
   }
   pollutions3.visible = false;
+  // pollutions3.visible = true;
 
   sunfishUnimpressedS.collider = 'kinematic';
   sunfishUnimpressedS.diameter = 125;
@@ -127,6 +129,7 @@ function squidExploration() {
     sunfishUnimpressedS.visible = false;
     squidNeutralS.visible = false;
     pollutions2.visible = false;
+    // pollutions3.visible = false;
     sunfishDeadS.visible = true;
     button.visible = true;
     button.show();
@@ -149,6 +152,7 @@ function squidExploration() {
 
 function level1() {
   speed = 5;
+  // speed = 7;
   background(200);
 
   squidExploration();
@@ -164,6 +168,7 @@ function restart() {
   camera.x = 120;
   camera.y = 400;
   pollutions2.visible = true;
+  // pollutions3.visible = true;
   camera.x = sunfishUnimpressedS.x;
   button.visible = false;
   button.hide();
@@ -171,17 +176,17 @@ function restart() {
 }
 
 function draw() {
-  textSize(20);
-  fill(255);
-  textAlign(CENTER, CENTER);
   level1();
   if (sunfishUnimpressedS.x > 6000) {
     sunfishUnimpressedS.visible = false;
     pollutions2.visible = false;
+    // pollutions3.visible = false;
     squidNeutralS.visible = false;
     bgSprite.visible = false;
     background(50);
-    clear();
-    text("You won! Next game...", width / 2, 50);
+    textSize(20);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    text("You won! Next game...", camera.x, 100);
   }
 }
