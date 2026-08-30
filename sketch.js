@@ -96,14 +96,14 @@ function draw() {
     catSpeed = 0.02;
     ballSpeed = 3;
     blobSize = 0.3;
-    spawnRate = 40;
+    spawnRate = 50;
     hitWidth = 75;
     hitLength = 75;
   } else if (level === 2) {
     catSpeed = 0.03;
     ballSpeed = 1;
     blobSize = 0.45;
-    spawnRate = 20;
+    spawnRate = 40;
     hitWidth = 90;
     hitLength = 90;
   }
